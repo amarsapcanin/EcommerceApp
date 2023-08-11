@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">EcommerceApp</string>
+    <string name="app_name">MyShop</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">FORGOT PASSWORD</string>
+    <string name="login">Login</string>
+    <string name="i_don_t_have_an_account">I DON\'T HAVE AN ACCOUNT</string>
+    <string name="login_toolbar">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="i_have_an_account">I HAVE AN ACCOUNT</string>
+    <string name="full_name">Full Name</string>
+    <string name="number">Number</string>
 </resources>

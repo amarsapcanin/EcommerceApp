@@ -7,34 +7,26 @@ import android.os.Handler
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.ActivitySplashBinding
 import com.apolis.ecommerceapp.model.preferences.SharedPreference
+import com.apolis.ecommerceapp.presenter.SplashContract
+import com.apolis.ecommerceapp.presenter.SplashPresenter
 
-class Splash : AppCompatActivity() {
-
-    private lateinit var binding: ActivitySplashBinding
-    private lateinit var sharedPreference : SharedPreference
-    private var SPLASH_DELAY : Long = 2500
-
+class Splash : AppCompatActivity(), SplashContract.SplashView {
+    private lateinit var splashPresenter: SplashContract.SplashPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        splashPresenter = SplashPresenter(this, SharedPreference(applicationContext))
+        splashPresenter.onViewCreated()
+    }
 
-        sharedPreference = SharedPreference(applicationContext)
+    override fun navigateToRegistration() {
+        startActivity(Intent(this, Registration::class.java))
+        finish()
+    }
 
-        val ifFirstTime = sharedPreference.getBoolean("isFirstTime", false)
-
-        Handler().postDelayed({
-
-            if(ifFirstTime){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }else{
-                val intent = Intent(this, Intro::class.java)
-                startActivity(intent)
-            }
-
-            finish()
-        }, SPLASH_DELAY)
+    override fun navigateToIntro() {
+        startActivity(Intent(this, Intro::class.java))
+        finish()
     }
 }
