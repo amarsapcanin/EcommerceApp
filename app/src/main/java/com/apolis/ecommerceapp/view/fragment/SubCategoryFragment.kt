@@ -8,18 +8,16 @@ import android.view.ViewGroup
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.CustomTabLayoutBinding
 import com.apolis.ecommerceapp.databinding.FragmentSubCategoryBinding
-import com.apolis.ecommerceapp.model.VolleyHandler
 import com.apolis.ecommerceapp.model.remote.dto.Category
-import com.apolis.ecommerceapp.model.remote.dto.CategoryResponse
 import com.apolis.ecommerceapp.model.remote.dto.SubCategoryResponse
 import com.apolis.ecommerceapp.model.remote.dto.Subcategory
 import com.apolis.ecommerceapp.view.adapter.SubCategoryAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 
+@Suppress("DEPRECATION")
 class SubCategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentSubCategoryBinding
@@ -36,7 +34,7 @@ class SubCategoryFragment : Fragment() {
 
         val clickedCategory = arguments?.getParcelable<Category>("clickedCategory")
         if(clickedCategory != null){
-            clickedCategory.category_id?.let { fetchSubcategories(it) }
+            clickedCategory.category_id ?.let { fetchSubcategories(it) }
         }
     }
 
@@ -52,7 +50,7 @@ class SubCategoryFragment : Fragment() {
                     displaySubcategories(subcategories)
 
                 } else {
-                    val message = categoriesResponse.message
+                    //error
                 }
             },
             { _ ->

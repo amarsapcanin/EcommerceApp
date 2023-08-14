@@ -1,5 +1,6 @@
 package com.apolis.ecommerceapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,12 +15,18 @@ import com.apolis.ecommerceapp.model.remote.dto.Category
 import com.apolis.ecommerceapp.model.remote.dto.CategoryResponse
 import com.apolis.ecommerceapp.presenter.CategoryContract
 import com.apolis.ecommerceapp.presenter.CategoryPresenter
+import com.apolis.ecommerceapp.view.activity.MainActivity
 import com.apolis.ecommerceapp.view.adapter.CategoryAdapter
 
 class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.ItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var presenter: CategoryPresenter
+    private var homeInteractionListener: HomeInteractionListener? = null
+
+    interface HomeInteractionListener {
+        fun onHideToolbarRequested(hide: Boolean)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,11 +35,28 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is HomeInteractionListener) {
+            homeInteractionListener = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        homeInteractionListener = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = CategoryPresenter(VolleyHandler(requireContext()), this)
         presenter.getCategories()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? MainActivity)?.showToolbar()
     }
 
     override fun categoriesSuccess(categoryResponse: CategoryResponse) {
@@ -55,6 +79,7 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
             .replace(R.id.main_container, subCategoryFragment)
             .addToBackStack(null)
             .commit()
+        (activity as? MainActivity)?.hideToolbar()
     }
 
     override fun categoriesError(message: String) {

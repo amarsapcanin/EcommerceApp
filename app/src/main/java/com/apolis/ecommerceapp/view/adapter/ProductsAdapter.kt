@@ -8,8 +8,13 @@ import com.apolis.ecommerceapp.databinding.ProductItemBinding
 import com.apolis.ecommerceapp.model.remote.dto.Product
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter(private val products: MutableList<Product>) :
+class ProductsAdapter(private val products: MutableList<Product>,
+                      private val itemClickListener: ItemClickListener) :
     RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
+
+    interface ItemClickListener {
+        fun onProductClick(product: Product)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -34,6 +39,14 @@ class ProductsAdapter(private val products: MutableList<Product>) :
 
     inner class ProductViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener{
+                val clickedProduct = products[adapterPosition]
+                itemClickListener.onProductClick(clickedProduct)
+            }
+        }
+
         fun bind(product: Product){
             binding.apply {
                 /*Picasso

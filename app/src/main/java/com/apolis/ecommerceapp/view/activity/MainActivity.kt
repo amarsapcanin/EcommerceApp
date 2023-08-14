@@ -17,6 +17,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var selectedMenuItem: MenuItem
     private var isSearchVisible = false
+
+    fun hideToolbar() {
+        supportActionBar?.hide()
+    }
+
+    fun showToolbar() {
+        supportActionBar?.show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
