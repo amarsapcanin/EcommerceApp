@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_10dp"
+    app:cardCornerRadius="10dp"
+    android:background="@color/background_cardview"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/iphone"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_nameOfProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange_app"
+            style="@style/NavigationViewTextAppearance"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            android:text="@string/realme_nazro_50"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_descriptionOfProduct"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            android:text="@string/dummy_text_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_nameOfProduct"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_priceOfProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            style="@style/NavigationViewTextAppearance"
+            android:textColor="@color/orange_app"
+            android:text="@string/_200"
+            app:layout_constraintTop_toBottomOf="@id/txt_descriptionOfProduct"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_addToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/txt_priceOfProduct"
+            android:textColor="@color/primary_app_color"
+            android:textSize="@dimen/_27sp"
+            android:text="ADD TO CART"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_descriptionOfProduct"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

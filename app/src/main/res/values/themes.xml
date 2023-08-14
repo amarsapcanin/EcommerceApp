@@ -13,4 +13,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="NavigationViewTextAppearance">
+        <item name="android:textSize">@dimen/_24sp</item>
+    </style>
+
+
 </resources>

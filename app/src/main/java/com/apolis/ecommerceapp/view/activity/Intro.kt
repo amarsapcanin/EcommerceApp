@@ -7,7 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.apolis.ecommerceapp.databinding.ActivityIntroBinding
 import com.apolis.ecommerceapp.databinding.IndicatorDotsBinding
 import com.apolis.ecommerceapp.view.adapter.ViewpagerAdapter
-import com.apolis.ecommerceapp.view.fragment.introFragments.CartFragment
+import com.apolis.ecommerceapp.view.fragment.introFragments.CartFragmentIntro
 import com.apolis.ecommerceapp.view.fragment.introFragments.OrderFragment
 import com.apolis.ecommerceapp.view.fragment.introFragments.ProductsFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,7 +25,7 @@ class Intro : AppCompatActivity() {
     }
 
     private fun initViews() {
-        val fragments = listOf(ProductsFragment(), CartFragment(), OrderFragment())
+        val fragments = listOf(ProductsFragment(), CartFragmentIntro(), OrderFragment())
         viewpagerAdapter = ViewpagerAdapter(
             fragments,
             this@Intro

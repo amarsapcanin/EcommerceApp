@@ -11,14 +11,17 @@ import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
 import com.google.gson.Gson
 import org.json.JSONObject
 
-class LoginPresenter(private val volleyHandler: VolleyHandler, private val loginView: LoginContract.LoginView) :
-    LoginContract.LoginPresenter {
+class RegistrationPresenter(
+    private val volleyHandler: VolleyHandler,
+    private val registrationView: RegistrationContract.RegistrationView)
+    : RegistrationContract.RegistrationPresenter {
 
-    override fun performLogin(email: String, password: String) {
-        volleyHandler.login(email, password, responseCallback = object : ResponseCallback{
+    override fun performRegistration( fullName: String, mobileNo: String, email: String,
+        password: String) {
 
+        volleyHandler.register(fullName, mobileNo, email, password, object : ResponseCallback{
             override fun successLogin(loginResponse: LoginResponse) {
-                loginView.loginSuccess(loginResponse)
+                registrationView.registrationSuccess(loginResponse)
             }
 
             override fun successCategory(categoryResponse: CategoryResponse) {
@@ -26,12 +29,13 @@ class LoginPresenter(private val volleyHandler: VolleyHandler, private val login
             }
 
             override fun failure(error: String) {
-                loginView.loginFailure(error)
+                registrationView.registrationFailure(error)
             }
         })
+
     }
 
-    override fun onNoAccountLinkClicked() {
-        loginView.navigateToRegistrationFragment()
+    override fun onYesAccountLinkClicked() {
+        registrationView.navigateToLoginFragment()
     }
 }

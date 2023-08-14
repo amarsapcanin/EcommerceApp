@@ -11,4 +11,14 @@
     <string name="i_have_an_account">I HAVE AN ACCOUNT</string>
     <string name="full_name">Full Name</string>
     <string name="number">Number</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="orders">Orders</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="women_s_wear">Women\'s Wear</string>
+    <string name="android">Android</string>
+    <string name="realme_nazro_50">RealMe Nazro 50</string>
+    <string name="dummy_text_description">5G, OS: Android 10, RAM: 16 GB, Internal Storage: 256 GB, Primary Camera: 64 MP, Secondary Camera: 13 MP</string>
+    <string name="_200">$ 200</string>
 </resources>

@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.FragmentLoginBinding
+import com.apolis.ecommerceapp.model.VolleyHandler
+import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
 import com.apolis.ecommerceapp.presenter.LoginContract
 import com.apolis.ecommerceapp.presenter.LoginPresenter
 import com.apolis.ecommerceapp.view.activity.MainActivity
@@ -31,7 +34,7 @@ class LoginFragment : Fragment(), LoginContract.LoginView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loginPresenter = LoginPresenter(this, requireContext())
+        loginPresenter = LoginPresenter(VolleyHandler(requireContext()),this)
 
         binding.txtNoAccount.setOnClickListener {
             loginPresenter.onNoAccountLinkClicked()
@@ -44,11 +47,13 @@ class LoginFragment : Fragment(), LoginContract.LoginView {
         }
     }
 
-    override fun showLoginSuccess() {
+    override fun loginSuccess(loginResponse: LoginResponse) {
+        Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), MainActivity::class.java))
     }
 
-    override fun showLoginFailure(message: String) {
+    override fun loginFailure(message: String) {
+        Toast.makeText(requireContext(), "$message", Toast.LENGTH_SHORT).show()
         Log.i("TAG", message)
     }
 
