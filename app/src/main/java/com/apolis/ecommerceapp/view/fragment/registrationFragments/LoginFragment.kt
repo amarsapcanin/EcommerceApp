@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.FragmentLoginBinding
 import com.apolis.ecommerceapp.model.VolleyHandler
+import com.apolis.ecommerceapp.model.preferences.SharedPreference
 import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
 import com.apolis.ecommerceapp.presenter.LoginContract
 import com.apolis.ecommerceapp.presenter.LoginPresenter
@@ -22,6 +24,7 @@ class LoginFragment : Fragment(), LoginContract.LoginView {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var loginPresenter: LoginContract.LoginPresenter
+    private lateinit var sharedPreference : SharedPreference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,10 @@ class LoginFragment : Fragment(), LoginContract.LoginView {
         binding.btnLogin.setOnClickListener {
             val email = binding.edEmail.text.toString()
             val password = binding.edPassword.text.toString()
+
+            sharedPreference = SharedPreference(requireContext())
+            sharedPreference.saveEmail("email", email)
+
             loginPresenter.performLogin(email, password)
         }
     }

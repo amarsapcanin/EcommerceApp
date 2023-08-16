@@ -6,15 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.CartFragment">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_totalBill"
+        style="@style/NavigationViewTextAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HERE WILL BE CART DISPLAYED FRAGMENT"
-        android:textSize="@dimen/_27sp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/total_bill_amount"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_up" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_total"
+        style="@style/NavigationViewTextAppearance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_640"
+        android:textColor="@color/orange_app"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_up" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_products"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_checkout"
+        app:layout_constraintTop_toBottomOf="@id/txt_totalBill" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_checkout"
+        style="@style/PrimaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkout"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_down"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintStart_toEndOf="@id/vertical_left" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.048661802" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.93" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

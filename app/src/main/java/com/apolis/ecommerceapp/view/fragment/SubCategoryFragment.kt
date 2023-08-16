@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -29,6 +30,12 @@ class SubCategoryFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        showTabLayout()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,6 +43,10 @@ class SubCategoryFragment : Fragment() {
         if(clickedCategory != null){
             clickedCategory.category_id ?.let { fetchSubcategories(it) }
         }
+    }
+
+    private fun showTabLayout() {
+        binding.tabLayout.visibility = View.VISIBLE
     }
 
     private fun fetchSubcategories(categoryId: String?) {
@@ -77,7 +88,6 @@ class SubCategoryFragment : Fragment() {
             tab.customView = tabBinding.root
         }.attach()
     }
-
 
     companion object {
         const val URL_SUB_CATEGORY = "http://10.0.2.2/myshop/index.php/SubCategory?category_id="

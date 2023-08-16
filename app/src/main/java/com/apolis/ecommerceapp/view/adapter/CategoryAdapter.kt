@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apolis.ecommerceapp.databinding.CategoryItemBinding
 import com.apolis.ecommerceapp.model.remote.dto.Category
+import com.apolis.ecommerceapp.view.activity.MainActivity
 import com.squareup.picasso.Picasso
 
 class CategoryAdapter(private val categories: List<Category>, private val itemClickListener: ItemClickListener) :
@@ -35,6 +36,7 @@ class CategoryAdapter(private val categories: List<Category>, private val itemCl
         }
 
             fun bind(categories: Category){
+
                 Picasso.get().load(URL_IMAGE+categories.category_image_url).into(binding.imgCategory)
                 binding.txtCategory.text = categories.category_name
             }
@@ -47,5 +49,4 @@ class CategoryAdapter(private val categories: List<Category>, private val itemCl
     companion object {
         const val URL_IMAGE = "http://10.0.2.2/myshop/images/"
     }
-
 }

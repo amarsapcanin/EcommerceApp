@@ -7,12 +7,13 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.apolis.ecommerceapp.model.remote.dto.CategoryResponse
 import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
+import com.apolis.ecommerceapp.model.remote.dto.LogoutResponse
 import com.google.gson.Gson
 import org.json.JSONObject
 
 class VolleyHandler(private val context: Context) {
 
-    fun login(email: String, password: String, responseCallback: ResponseCallback){
+    fun login(email: String, password: String, responseLoginCallback: ResponseLoginCallback){
         val jsonObject = JSONObject()
         jsonObject.put(KEY_EMAIL, email)
         jsonObject.put(KEY_PASSWORD, password)
@@ -23,21 +24,21 @@ class VolleyHandler(private val context: Context) {
                 val loginResponse = Gson().fromJson(response.toString(), LoginResponse::class.java)
 
                 if (loginResponse.status == 0) {
-                    responseCallback.successLogin(loginResponse)
+                    responseLoginCallback.successLogin(loginResponse)
                 } else {
                     val message = loginResponse.message
-                    responseCallback.failure(message)
+                    responseLoginCallback.failureLogin(message)
                 }
             },
             { error ->
-                responseCallback.failure(error.toString())
+                responseLoginCallback.failureLogin(error.toString())
             })
         val requestQueue = Volley.newRequestQueue(context)
         requestQueue.add(request)
     }
 
     fun register(fullName: String, mobileNo: String, email: String, password: String,
-                 responseCallback: ResponseCallback) {
+                 responseLoginCallback: ResponseLoginCallback) {
 
             val jsonObject = JSONObject()
             jsonObject.put(KEY_FULLNAME, fullName)
@@ -52,36 +53,61 @@ class VolleyHandler(private val context: Context) {
                         LoginResponse::class.java)
 
                     if (registrationResponse.status == 0) {
-                        responseCallback.successLogin(registrationResponse)
+                        responseLoginCallback.successLogin(registrationResponse)
                     } else {
                         val message = registrationResponse.message
-                        responseCallback.failure(message)
+                        responseLoginCallback.failureLogin(message)
                     }
                 },
                 { error ->
-                    responseCallback.failure(error.toString())
+                    responseLoginCallback.failureLogin(error.toString())
                 })
 
             val requestQueue = Volley.newRequestQueue(context)
             requestQueue.add(request)
     }
 
-    fun getCategories(responseCallback: ResponseCallback){
+    fun getCategories(responseCategoryCallback: ResponseCategoryCallback){
         val request = JsonObjectRequest(
             GET, URL_CATEGORY, null,
             { response ->
                 val categoriesResponse = Gson().fromJson(response.toString(), CategoryResponse::class.java)
 
                 if (categoriesResponse.status == 0) {
-                    responseCallback.successCategory(categoriesResponse)
+                    responseCategoryCallback.successCategory(categoriesResponse)
                 } else {
                     val message = categoriesResponse.message
-                    responseCallback.failure(message)
+                    responseCategoryCallback.failureCategory(message)
                 }
             },
             { error ->
-                responseCallback.failure(error.toString())
+                responseCategoryCallback.failureCategory(error.toString())
             })
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
+    }
+
+    fun logout(email: String, responseLogoutCallback: ResponseLogoutCallback) {
+        val requestObject = JSONObject()
+        requestObject.put("email_id", email)
+
+        val request = JsonObjectRequest(
+            Request.Method.POST, URL_LOGOUT, requestObject,
+            { response ->
+                val logoutResponse = Gson().fromJson(response.toString(),
+                    LogoutResponse::class.java)
+                if (logoutResponse.status == 0) {
+                    responseLogoutCallback.successLogout(logoutResponse)
+                } else {
+                    val message = logoutResponse.message
+                    responseLogoutCallback.failureLogout(message)
+                }
+            },
+            { error ->
+                responseLogoutCallback.failureLogout(error.toString())
+            }
+        )
+
         val requestQueue = Volley.newRequestQueue(context)
         requestQueue.add(request)
     }
@@ -90,6 +116,7 @@ class VolleyHandler(private val context: Context) {
         const val URL_LOGIN = "http://10.0.2.2/myshop/index.php/User/auth"
         const val URL_REG = "http://10.0.2.2/myshop/index.php/User/register"
         const val URL_CATEGORY = "http://10.0.2.2/myshop/index.php/Category"
+        const val URL_LOGOUT = "http://10.0.2.2/myshop/index.php/User/logout"
         const val KEY_EMAIL = "email_id"
         const val KEY_PASSWORD = "password"
         const val KEY_FULLNAME = "full_name"

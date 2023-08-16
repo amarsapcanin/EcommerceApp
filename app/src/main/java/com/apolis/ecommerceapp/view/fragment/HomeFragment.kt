@@ -1,6 +1,5 @@
 package com.apolis.ecommerceapp.view.fragment
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,29 +21,13 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var presenter: CategoryPresenter
-    private var homeInteractionListener: HomeInteractionListener? = null
 
-    interface HomeInteractionListener {
-        fun onHideToolbarRequested(hide: Boolean)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is HomeInteractionListener) {
-            homeInteractionListener = context
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        homeInteractionListener = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +39,8 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
 
     override fun onResume() {
         super.onResume()
-        (activity as? MainActivity)?.showToolbar()
+
+        (activity as? MainActivity)?.originalToolbar()
     }
 
     override fun categoriesSuccess(categoryResponse: CategoryResponse) {
@@ -79,7 +63,9 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
             .replace(R.id.main_container, subCategoryFragment)
             .addToBackStack(null)
             .commit()
-        (activity as? MainActivity)?.hideToolbar()
+
+        var nameOfCategory = categories.category_name.toString()
+        (activity as? MainActivity)?.updateToolbar(nameOfCategory)
     }
 
     override fun categoriesError(message: String) {
