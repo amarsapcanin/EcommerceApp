@@ -1,6 +1,7 @@
 package com.apolis.ecommerceapp.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apolis.ecommerceapp.R
@@ -9,10 +10,10 @@ import com.apolis.ecommerceapp.model.remote.dto.Product
 import com.squareup.picasso.Picasso
 
 class ProductsAdapter(private val products: MutableList<Product>,
-                      private val itemClickListener: ItemClickListener) :
+                      private val itemProductClickListener: ItemProductClickListener) :
     RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
-    interface ItemClickListener {
+    interface ItemProductClickListener {
         fun onProductClick(product: Product)
     }
 
@@ -38,12 +39,12 @@ class ProductsAdapter(private val products: MutableList<Product>,
     }
 
     inner class ProductViewHolder(private val binding: ProductItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         init {
             binding.root.setOnClickListener{
                 val clickedProduct = products[adapterPosition]
-                itemClickListener.onProductClick(clickedProduct)
+                itemProductClickListener.onProductClick(clickedProduct)
             }
         }
 
@@ -64,6 +65,10 @@ class ProductsAdapter(private val products: MutableList<Product>,
                 txtPriceOfProduct.text = "$ ${product.price}"
 
             }
+        }
+
+        override fun onClick(v: View?) {
+            itemProductClickListener.onProductClick(products[adapterPosition])
         }
     }
 

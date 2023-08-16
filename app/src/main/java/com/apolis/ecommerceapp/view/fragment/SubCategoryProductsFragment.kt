@@ -13,10 +13,11 @@ import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.FragmentSubCategoryProductsBinding
 import com.apolis.ecommerceapp.model.remote.dto.Product
 import com.apolis.ecommerceapp.model.remote.dto.ProductResponse
+import com.apolis.ecommerceapp.view.activity.MainActivity
 import com.apolis.ecommerceapp.view.adapter.ProductsAdapter
 import com.google.gson.Gson
 
-class SubCategoryProductsFragment : Fragment(), ProductsAdapter.ItemClickListener {
+class SubCategoryProductsFragment : Fragment(), ProductsAdapter.ItemProductClickListener {
 
     private lateinit var binding: FragmentSubCategoryProductsBinding
     private lateinit var productsAdapter: ProductsAdapter
@@ -66,6 +67,8 @@ class SubCategoryProductsFragment : Fragment(), ProductsAdapter.ItemClickListene
             .replace(R.id.productDetail_fragment, productDetailFragment)
             .addToBackStack(null)
             .commit()
+
+        (activity as? MainActivity)?.updateToolbar("Details")
     }
 
     companion object {

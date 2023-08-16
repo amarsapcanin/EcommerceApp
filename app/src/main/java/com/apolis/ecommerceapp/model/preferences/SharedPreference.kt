@@ -8,12 +8,16 @@ class SharedPreference(private val context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun saveString(key: String, value: String) {
+    fun saveEmail(key: String, value: String) {
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String, defaultValue: String? = null): String? {
+    fun getEmail(key: String, defaultValue: String? = null): String? {
         return sharedPreferences.getString(key, defaultValue)
+    }
+
+    fun clearEmail() {
+        sharedPreferences.edit().remove("email").apply()
     }
 
     fun saveBoolean(key: String, value: Boolean) {

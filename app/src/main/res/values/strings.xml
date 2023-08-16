@@ -21,4 +21,7 @@
     <string name="realme_nazro_50">RealMe Nazro 50</string>
     <string name="dummy_text_description">5G, OS: Android 10, RAM: 16 GB, Internal Storage: 256 GB, Primary Camera: 64 MP, Secondary Camera: 13 MP</string>
     <string name="_200">$ 200</string>
+    <string name="total_bill_amount">Total Bill Amount</string>
+    <string name="_640">$ 640</string>
+    <string name="checkout">CHECKOUT</string>
 </resources>

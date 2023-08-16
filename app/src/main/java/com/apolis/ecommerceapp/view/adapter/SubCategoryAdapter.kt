@@ -2,10 +2,12 @@ package com.apolis.ecommerceapp.view.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.adapter.FragmentViewHolder
 import com.apolis.ecommerceapp.model.remote.dto.Subcategory
+import com.apolis.ecommerceapp.view.fragment.SubCategoryFragment
 import com.apolis.ecommerceapp.view.fragment.SubCategoryProductsFragment
 
-class SubCategoryAdapter(fragment: Fragment, private val subcategories: List<Subcategory>)
+class SubCategoryAdapter(fragment: Fragment, private val subcategories: List<Subcategory>, )
     : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = subcategories.size
     override fun createFragment(position: Int): Fragment {
