@@ -41,4 +41,8 @@
     <string name="cash_on_delivery">Cash On Delivery</string>
     <string name="confirm_and_place_order">CONFIRM AND PLACE ORDER</string>
     <string name="switch_theme">Switch Theme</string>
+    <string name="txt_switch_theme">Switch Theme</string>
+    <string name="_1_929_941_3221">+ 1 929 941 3221</string>
+    <string name="welcome_amar">Welcome Amar</string>
+    <string name="amar_gmail_com">amar@gmail.com</string>
 </resources>

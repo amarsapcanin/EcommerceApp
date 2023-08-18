@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.apolis.ecommerceapp.R
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
     private lateinit var logoutPresenter: LogoutContract.LogoutPresenter
     private lateinit var sharedPreference : SharedPreference
     private var isSearchVisible = false
+    private var isDarkTheme = false
 
     fun updateToolbar(title: String) {
         supportActionBar?.apply {
@@ -48,10 +52,34 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val headerView = binding.navViews.getHeaderView(0)
+
+        val nameOfUser = headerView.findViewById<TextView>(R.id.txt_nameOfUser)
+        val emailOfUser = headerView.findViewById<TextView>(R.id.txt_emailOfUser)
+        val numberOfUser = headerView.findViewById<TextView>(R.id.txt_numberOfUser)
+
+        sharedPreference = SharedPreference(this)
+        nameOfUser.text = sharedPreference.getName("userName")
+        emailOfUser.text = sharedPreference.getEmail("email")
+        numberOfUser.text = sharedPreference.getNumber("userNumber")
+
+        val themeSwitch = headerView.findViewById<SwitchCompat>(R.id.switchTheme)
+
+        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            AppCompatDelegate.setDefaultNightMode(
+                if (isChecked) {
+                    AppCompatDelegate.MODE_NIGHT_YES
+                } else {
+                    AppCompatDelegate.MODE_NIGHT_NO
+                }
+            )
+        }
 
         logoutPresenter = LogoutPresenter(VolleyHandler(this), this)
 
@@ -91,6 +119,8 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
                         logoutPresenter.performLogout(email)
                     }
                     sharedPreference.clearEmail()
+                    sharedPreference.clearName()
+                    sharedPreference.clearNumber()
                 }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -107,6 +137,14 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
             }
         }
 
+    }
+
+    private fun toggleTheme() {
+        if (isDarkTheme) {
+            setTheme(R.style.ThemeLight)
+        } else {
+            setTheme(R.style.ThemeDark)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

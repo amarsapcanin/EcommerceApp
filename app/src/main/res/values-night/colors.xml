@@ -2,5 +2,5 @@
 <resources>
     <color name="primary_app_color">#0070b3</color>
     <color name="orange_app">#C67447</color>
-    <color name="background_cardview">#9A9697</color>
+    <color name="background_cardview">#ECE5E7</color>
 </resources>
