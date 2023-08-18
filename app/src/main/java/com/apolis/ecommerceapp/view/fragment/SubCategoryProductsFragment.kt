@@ -29,7 +29,7 @@ class SubCategoryProductsFragment : Fragment(), ProductsAdapter.ItemProductClick
         binding = FragmentSubCategoryProductsBinding.inflate(inflater, container, false)
         val subcategoryId = arguments?.getString("subcategoryId")
 
-        productsAdapter = ProductsAdapter(mutableListOf(), this)
+        productsAdapter = ProductsAdapter(requireContext(), mutableListOf(), this)
         binding.productRecyclerView.adapter = productsAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 

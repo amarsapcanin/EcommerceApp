@@ -27,6 +27,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="-10dp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

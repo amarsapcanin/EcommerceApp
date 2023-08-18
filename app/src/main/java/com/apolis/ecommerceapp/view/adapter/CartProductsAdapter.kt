@@ -6,81 +6,68 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apolis.ecommerceapp.R
-import com.apolis.ecommerceapp.databinding.ProductItemBinding
+import com.apolis.ecommerceapp.databinding.CartProductItemBinding
 import com.apolis.ecommerceapp.model.local.DbHandler
 import com.apolis.ecommerceapp.model.local.dao.ProductDao
 import com.apolis.ecommerceapp.model.local.entity.ProductLocal
-import com.apolis.ecommerceapp.model.remote.dto.Product
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter(private val context: Context,
-                      private val products: MutableList<Product>,
-                      private val itemProductClickListener: ItemProductClickListener) :
-    RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
+class CartProductsAdapter(private val context: Context,
+                          private val products: MutableList<ProductLocal>) :
+    RecyclerView.Adapter<CartProductsAdapter.ViewHolder>() {
 
     private lateinit var dbHandler: DbHandler
     private lateinit var productDao: ProductDao
-    interface ItemProductClickListener {
-        fun onProductClick(product: Product)
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CartProductsAdapter.ViewHolder {
         initDao()
-
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ProductItemBinding.inflate(inflater, parent, false)
-        return ProductViewHolder(binding)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = CartProductItemBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(binding)
+    }
+    override fun onBindViewHolder(holder: CartProductsAdapter.ViewHolder, position: Int) {
+        holder.bind(products[position])
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = products[position]
-        holder.bind(product)
-    }
-
-    override fun getItemCount(): Int {
-        return products.size
-    }
-
-    fun updateData(newProducts: List<Product>) {
+    fun updateProducts(newProducts: List<ProductLocal>) {
         products.clear()
         products.addAll(newProducts)
         notifyDataSetChanged()
     }
 
-    inner class ProductViewHolder(private val binding: ProductItemBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    override fun getItemCount(): Int = products.size
 
-        init {
-            binding.root.setOnClickListener{
-                val clickedProduct = products[adapterPosition]
-                itemProductClickListener.onProductClick(clickedProduct)
-            }
-        }
+    inner class ViewHolder(private val binding: CartProductItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: Product){
+        fun bind(productLocal: ProductLocal) {
             binding.apply {
-                /*Picasso
-                    .get()
-                    .load(CategoryAdapter.URL_IMAGE +product.product_image_url)
-                    .into(imgProduct)*/
 
                 Picasso
                     .get()
                     .load(R.drawable.iphone)
                     .into(imgProduct)
+                txtNameOfProduct.text = productLocal.product_name
+                txtDescriptionOfProduct.text = productLocal.description
+                txtPriceOfProduct.text = "$ ${productLocal.price}"
 
-                txtNameOfProduct.text = product.product_name
-                txtDescriptionOfProduct.text = product.description
-                txtPriceOfProduct.text = "$ ${product.price}"
+                var totalPriceNumber = productLocal.total_price
+                val totalPrice = productLocal.total_price.toString()
+                txtTotalPriceOfProduct.text = totalPrice
 
-                // here I will do all works with cart
-                val productId = product.product_id.toString()
+                val productId = productLocal.product_id
 
                 var quantity = productDao.getProductQuantity(productId)
 
                 if (quantity < 1) {
                     quantity = 1
+
+                    val newTotalPrice = totalPriceNumber + productLocal.price.toDouble()
+                    txtTotalPriceOfProduct.text = newTotalPrice.toString()
+
                     binding.txtAddToCart.visibility = View.VISIBLE
                     binding.layoutAddToCart.visibility = View.GONE
                 } else {
@@ -93,12 +80,14 @@ class ProductsAdapter(private val context: Context,
                     binding.txtAddToCart.visibility = View.GONE
                     binding.layoutAddToCart.visibility = View.VISIBLE
 
+                    val newTotalPrice = totalPriceNumber + productLocal.price.toDouble()
+                    txtTotalPriceOfProduct.text = newTotalPrice.toString()
 
-                    val productId = product.product_id.toString()
-                    val productName = product.product_name.toString()
-                    val productImage = product.product_image_url.toString()
-                    val description = product.description.toString()
-                    val price = product.price.toString()
+                    val productId = productLocal.product_id
+                    val productName = productLocal.product_name
+                    val productImage = productLocal.product_image_url
+                    val description = productLocal.description
+                    val price = productLocal.price
 
                     val newProduct = ProductLocal(
                         product_id = productId,
@@ -115,33 +104,38 @@ class ProductsAdapter(private val context: Context,
                     if (quantity > 1) {
                         quantity--
                         binding.txtQuantitiyCart.text = quantity.toString()
+
+                        val newTotalPrice = totalPriceNumber - productLocal.price.toDouble()
+                        totalPriceNumber = newTotalPrice
+                        txtTotalPriceOfProduct.text = newTotalPrice.toString()
+
                         productDao.updateQuantity(productId, quantity)
                     } else {
                         binding.txtAddToCart.visibility = View.VISIBLE
                         binding.layoutAddToCart.visibility = View.GONE
-                        productDao.deleteProductById(product.product_id.toString())
+                        val newTotalPrice = totalPriceNumber - productLocal.price.toDouble()
+                        totalPriceNumber = newTotalPrice
+                        txtTotalPriceOfProduct.text = newTotalPrice.toString()
+                        productDao.deleteProductById(productLocal.product_id)
                     }
                 }
 
                 binding.btnPlus.setOnClickListener {
                     quantity++
                     binding.txtQuantitiyCart.text = quantity.toString()
+
+                    val newTotalPrice = totalPriceNumber + productLocal.price.toDouble()
+                    totalPriceNumber = newTotalPrice
+                    txtTotalPriceOfProduct.text = newTotalPrice.toString()
+
                     productDao.updateQuantity(productId, quantity)
                 }
             }
-        }
-
-        override fun onClick(v: View?) {
-            itemProductClickListener.onProductClick(products[adapterPosition])
         }
     }
 
     private fun initDao() {
         dbHandler = DbHandler(context)
         productDao = ProductDao(dbHandler)
-    }
-
-    companion object {
-        const val URL_IMAGE = "http://10.0.2.2/myshop/images/"
     }
 }

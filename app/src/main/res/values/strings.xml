@@ -24,4 +24,21 @@
     <string name="total_bill_amount">Total Bill Amount</string>
     <string name="_640">$ 640</string>
     <string name="checkout">CHECKOUT</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="add_plus">+</string>
+    <string name="cart_minus">-</string>
+    <string name="next">NEXT</string>
+    <string name="_440">$ 440</string>
+    <string name="amount">Amount</string>
+    <string name="_1">1</string>
+    <string name="quantity">Quantity</string>
+    <string name="unit_price">Unit Price</string>
+    <string name="add_address">Add Address</string>
+    <string name="dummy_addy">402 W. Marine Way, Suite 100, Ships Building, Kodiak, Kodia, Island, AK, 99615</string>
+    <string name="home_addy">HOME</string>
+    <string name="cart_items">Cart Items</string>
+    <string name="payment_option">Payment Option:</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
+    <string name="confirm_and_place_order">CONFIRM AND PLACE ORDER</string>
+    <string name="switch_theme">Switch Theme</string>
 </resources>

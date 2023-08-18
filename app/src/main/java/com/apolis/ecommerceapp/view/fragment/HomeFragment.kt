@@ -44,6 +44,7 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
     }
 
     override fun categoriesSuccess(categoryResponse: CategoryResponse) {
+
         val adapter = CategoryAdapter(categoryResponse.categories, this)
         val layoutManager = GridLayoutManager(requireContext(), 2)
         binding.apply {
