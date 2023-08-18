@@ -49,7 +49,6 @@ class LoginFragment : Fragment(), LoginContract.LoginView {
 
             sharedPreference = SharedPreference(requireContext())
             sharedPreference.saveEmail("email", email)
-
             loginPresenter.performLogin(email, password)
         }
     }

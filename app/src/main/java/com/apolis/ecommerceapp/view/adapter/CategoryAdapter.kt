@@ -33,9 +33,7 @@ class CategoryAdapter(private val categories: List<Category>, private val itemCl
 
         init {
             binding.root.setOnClickListener(this)
-        }
-
-            fun bind(categories: Category){
+        }            fun bind(categories: Category){
 
                 Picasso.get().load(URL_IMAGE+categories.category_image_url).into(binding.imgCategory)
                 binding.txtCategory.text = categories.category_name

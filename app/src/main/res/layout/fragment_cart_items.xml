@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.CartFragment">
+    tools:context=".view.fragment.checkout.CartItemsFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_totalBill"
@@ -30,16 +30,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_20dp"
-        tools:listitem="@layout/cart_product_item"
-        app:layout_constraintBottom_toTopOf="@id/btn_checkout"
+        tools:listitem="@layout/checkout_item"
+        app:layout_constraintBottom_toTopOf="@id/btn_next"
         app:layout_constraintTop_toBottomOf="@id/txt_totalBill" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_checkout"
+        android:id="@+id/btn_next"
         style="@style/PrimaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/checkout"
+        android:text="@string/next"
         app:layout_constraintBottom_toTopOf="@id/horizontal_down"
         app:layout_constraintEnd_toStartOf="@id/vertical_right"
         app:layout_constraintStart_toEndOf="@id/vertical_left" />

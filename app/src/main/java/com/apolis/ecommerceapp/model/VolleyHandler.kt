@@ -5,14 +5,17 @@ import com.android.volley.Request
 import com.android.volley.Request.Method.GET
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.apolis.ecommerceapp.model.preferences.SharedPreference
 import com.apolis.ecommerceapp.model.remote.dto.CategoryResponse
 import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
 import com.apolis.ecommerceapp.model.remote.dto.LogoutResponse
 import com.google.gson.Gson
 import org.json.JSONObject
+import kotlin.math.log
 
 class VolleyHandler(private val context: Context) {
 
+    private lateinit var sharedPreference : SharedPreference
     fun login(email: String, password: String, responseLoginCallback: ResponseLoginCallback){
         val jsonObject = JSONObject()
         jsonObject.put(KEY_EMAIL, email)
@@ -25,6 +28,16 @@ class VolleyHandler(private val context: Context) {
 
                 if (loginResponse.status == 0) {
                     responseLoginCallback.successLogin(loginResponse)
+
+                    sharedPreference = SharedPreference(context)
+                    val userId = loginResponse.user?.user_id
+                    val userName = loginResponse.user?.full_name
+                    val userNumber = loginResponse.user?.mobile_no
+
+                    sharedPreference.saveId("userId", userId.toString())
+                    sharedPreference.saveName("userName", userName.toString())
+                    sharedPreference.saveNumber("userNumber", userNumber.toString())
+
                 } else {
                     val message = loginResponse.message
                     responseLoginCallback.failureLogin(message)
@@ -112,11 +125,13 @@ class VolleyHandler(private val context: Context) {
         requestQueue.add(request)
     }
 
+
     companion object {
         const val URL_LOGIN = "http://10.0.2.2/myshop/index.php/User/auth"
         const val URL_REG = "http://10.0.2.2/myshop/index.php/User/register"
         const val URL_CATEGORY = "http://10.0.2.2/myshop/index.php/Category"
         const val URL_LOGOUT = "http://10.0.2.2/myshop/index.php/User/logout"
+        // const val URL_ADDRESS = "http://10.0.2.2/myshop/index.php/User/addresses/"
         const val KEY_EMAIL = "email_id"
         const val KEY_PASSWORD = "password"
         const val KEY_FULLNAME = "full_name"

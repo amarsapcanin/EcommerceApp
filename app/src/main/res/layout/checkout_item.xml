@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_10dp"
+    app:contentPadding="@dimen/_10dp"
+    app:cardCornerRadius="10dp"
+    android:background="@color/background_cardview"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iphone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_nameOfProduct"
+            style="@style/NavigationViewTextAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/realme_nazro_50"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_unitPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unit_price"
+            android:textColor="@color/background_cardview"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            app:layout_constraintTop_toBottomOf="@id/txt_nameOfProduct" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_unitPriceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_200"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/txt_nameOfProduct" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quantity"
+            android:textColor="@color/background_cardview"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            app:layout_constraintTop_toBottomOf="@id/txt_unitPrice" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_quantityHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_1"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/txt_unitPriceHolder" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/amount"
+            android:textColor="@color/background_cardview"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintStart_toEndOf="@id/img_product"
+            app:layout_constraintTop_toBottomOf="@id/txt_quantity" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_amountHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1140"
+            android:textSize="@dimen/_17sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/txt_quantityHolder" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
