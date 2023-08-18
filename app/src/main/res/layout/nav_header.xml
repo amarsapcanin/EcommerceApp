@@ -2,30 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="@dimen/_10dp"
     android:layout_marginStart="@dimen/_20dp"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_nameOfUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome Amar"
+        android:text="@string/welcome_amar"
         android:textStyle="bold"
         android:textSize="@dimen/_27sp"
         android:textColor="@color/orange_app"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_emailOfUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="amar@gmail.com"
+        android:text="@string/amar_gmail_com"
         android:textSize="@dimen/_17sp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="@dimen/_10dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_numberOfUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ 1 929 941 3221"
+        android:text="@string/_1_929_941_3221"
         android:textSize="@dimen/_17sp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="@dimen/_10dp"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:text="@string/txt_switch_theme"
+        android:id="@+id/switchTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

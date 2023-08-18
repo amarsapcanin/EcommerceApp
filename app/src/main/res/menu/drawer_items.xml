@@ -21,10 +21,5 @@
             android:id="@+id/logout"
             android:title="@string/logout" />
 
-        <item
-            android:id="@+id/btn_switch"
-            android:title="@string/switch_theme"
-            android:actionLayout=""/>
-
     </group>
 </menu>
