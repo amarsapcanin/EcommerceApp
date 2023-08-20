@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.ActivityMainBinding
 import com.apolis.ecommerceapp.model.VolleyHandler
+import com.apolis.ecommerceapp.model.local.DbHandler
+import com.apolis.ecommerceapp.model.local.dao.InfoDao
+import com.apolis.ecommerceapp.model.local.dao.ProductDao
 import com.apolis.ecommerceapp.model.preferences.SharedPreference
 import com.apolis.ecommerceapp.model.remote.dto.LogoutResponse
 import com.apolis.ecommerceapp.presenter.LogoutContract
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
     private lateinit var selectedMenuItem: MenuItem
     private lateinit var logoutPresenter: LogoutContract.LogoutPresenter
     private lateinit var sharedPreference : SharedPreference
+    private lateinit var dbHandler: DbHandler
+    private lateinit var productDao: ProductDao
+    private lateinit var infoDao: InfoDao
     private var isSearchVisible = false
     private var isDarkTheme = false
 
@@ -52,11 +58,13 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initDao()
 
         val headerView = binding.navViews.getHeaderView(0)
 
@@ -121,6 +129,8 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
                     sharedPreference.clearEmail()
                     sharedPreference.clearName()
                     sharedPreference.clearNumber()
+                    productDao.clearAllProducts()
+                    infoDao.clearAllInfo()
                 }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -183,5 +193,11 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
     override fun logoutFailure(error: String) {
         Toast.makeText(
             this, "Logout unsuccessful!", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initDao() {
+        dbHandler = DbHandler(this)
+        productDao = ProductDao(dbHandler)
+        infoDao = InfoDao(dbHandler)
     }
 }

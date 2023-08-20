@@ -1,11 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:text="RADIII"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:id="@+id/txt_title"
+        style="@style/NavigationViewTextAppearance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_address"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_up" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_titleAddy"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50dp"
+        android:text="@string/address_title"
+        android:textSize="@dimen/_21sp"
+        android:textColor="@color/background_cardview"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ed_addressTitle"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_shape"
+        android:padding="@dimen/_10dp"
+        android:textSize="@dimen/_20sp"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"
+        app:layout_constraintTop_toBottomOf="@id/txt_titleAddy" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_Addy"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50dp"
+        android:text="@string/address"
+        android:textSize="@dimen/_21sp"
+        android:textColor="@color/background_cardview"
+        app:layout_constraintTop_toBottomOf="@id/ed_addressTitle"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ed_address"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_shape"
+        android:padding="@dimen/_10dp"
+        android:textSize="@dimen/_20sp"
+        app:layout_constraintEnd_toStartOf="@id/vertical_right"
+        app:layout_constraintStart_toEndOf="@id/vertical_left"
+        app:layout_constraintTop_toBottomOf="@id/txt_Addy" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginBottom="@dimen/_20sp"
+        android:background="@drawable/secondary_round_button"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/white"
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50dp"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_address" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginBottom="@dimen/_20sp"
+        android:textSize="@dimen/_20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/secondary_round_button"
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50dp"
+        android:text="@string/save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@id/ed_address" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
