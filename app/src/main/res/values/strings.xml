@@ -45,4 +45,9 @@
     <string name="_1_929_941_3221">+ 1 929 941 3221</string>
     <string name="welcome_amar">Welcome Amar</string>
     <string name="amar_gmail_com">amar@gmail.com</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="address_title">Address Title</string>
+    <string name="address">Address</string>
+    <string name="cancel">CANCEL</string>
+    <string name="save">SAVE</string>
 </resources>

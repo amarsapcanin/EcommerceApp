@@ -124,5 +124,9 @@ class ProductDao(private val dbHandler: DbHandler) {
         return totalPrice
     }
 
+    fun clearAllProducts(): Int {
+        return dbHandler.writableDatabase.delete(TABLE_PRODUCTS, null, null)
+    }
+
 
 }

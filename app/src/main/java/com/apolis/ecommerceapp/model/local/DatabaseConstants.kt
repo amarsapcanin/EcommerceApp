@@ -19,7 +19,7 @@ object DatabaseConstants {
     """.trimIndent()
 
     val CREATE_TABLE_INFO = """ CREATE TABLE $TABLE_INFO(
-        infoId TEXT PRIMARY KEY,
+        infoId INTEGER PRIMARY KEY,
         addressTitle TEXT,
         address TEXT,
         payment TEXT)

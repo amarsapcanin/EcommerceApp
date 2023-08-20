@@ -39,7 +39,6 @@ class HomeFragment : Fragment(), CategoryContract.CategoryView, CategoryAdapter.
 
     override fun onResume() {
         super.onResume()
-
         (activity as? MainActivity)?.originalToolbar()
     }
 

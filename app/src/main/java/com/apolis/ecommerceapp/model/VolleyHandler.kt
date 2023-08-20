@@ -131,7 +131,7 @@ class VolleyHandler(private val context: Context) {
         const val URL_REG = "http://10.0.2.2/myshop/index.php/User/register"
         const val URL_CATEGORY = "http://10.0.2.2/myshop/index.php/Category"
         const val URL_LOGOUT = "http://10.0.2.2/myshop/index.php/User/logout"
-        // const val URL_ADDRESS = "http://10.0.2.2/myshop/index.php/User/addresses/"
+        // const val URL_ADDRESS = "http://10.0.2.2/myshop/index.php/User/address"
         const val KEY_EMAIL = "email_id"
         const val KEY_PASSWORD = "password"
         const val KEY_FULLNAME = "full_name"

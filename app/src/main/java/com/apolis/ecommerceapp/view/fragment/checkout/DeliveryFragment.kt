@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.AddAddresDialogBinding
 import com.apolis.ecommerceapp.databinding.FragmentDeliveryBinding
+import com.apolis.ecommerceapp.model.VolleyHandler
 import com.apolis.ecommerceapp.model.preferences.SharedPreference
 import com.apolis.ecommerceapp.model.remote.dto.Address
 import com.apolis.ecommerceapp.model.remote.dto.AddressResponse
@@ -25,10 +26,13 @@ import com.google.gson.Gson
 import com.apolis.ecommerceapp.model.local.DbHandler
 import com.apolis.ecommerceapp.model.local.dao.InfoDao
 import com.apolis.ecommerceapp.model.local.entity.InfoLocal
+import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
+import org.json.JSONObject
 
 class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
 
     private lateinit var binding: FragmentDeliveryBinding
+    private lateinit var adapter: AddressAdapter
     private lateinit var sharedPreference : SharedPreference
     private lateinit var dbHandler: DbHandler
     private lateinit var infoDao: InfoDao
@@ -61,6 +65,15 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        sharedPreference = SharedPreference(requireContext())
+        val userId = sharedPreference.getId("userId")
+
+        getAddresses(userId.toString())
+    }
+
     private fun getAddresses(userId: String){
         val request = JsonObjectRequest(
             Request.Method.GET, URL_ADDRESS + userId, null,
@@ -84,7 +97,7 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
 
     private fun displayAddresses(address: List<Address>) {
 
-        val adapter = AddressAdapter(address, this)
+        adapter = AddressAdapter(address, this)
         val layoutManager = LinearLayoutManager(requireContext())
 
         binding.apply {
@@ -94,31 +107,73 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
     }
 
     private fun addAddressDialog() {
-        val signUpBinding = AddAddresDialogBinding.inflate(layoutInflater)
+        val addAddressDialogBinding = AddAddresDialogBinding.inflate(layoutInflater)
 
         val builder = AlertDialog.Builder(requireContext()).apply {
-            setView(signUpBinding.root)
-            setCancelable(true)
+            setView(addAddressDialogBinding.root)
+            setCancelable(false)
         }
 
         val dialog = builder.create()
-        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.window?.setGravity(Gravity.CENTER)
 
-        // Use this as template
-        /* signUpBinding.btnSignup.setOnClickListener {
-            showToast("Login success!")
+        addAddressDialogBinding.btnCancel.setOnClickListener {
             dialog.dismiss()
-        } */
+        }
 
+        addAddressDialogBinding.btnSave.setOnClickListener {
+            addAddressDialogBinding.apply {
+                val address = edAddress.text.toString()
+                val addressTittle = edAddressTitle.text.toString()
+
+                val userId = sharedPreference.getId("userId").toString()
+                addAddress(userId, addressTittle, address )
+
+                edAddress.text?.clear()
+                edAddressTitle.text?.clear()
+
+                adapter.notifyDataSetChanged()
+
+                dialog.dismiss()
+            }
+        }
         dialog.show()
     }
 
     override fun onItemClick(address: Address) {
         val newInfo =
-            address.title?.let { address.address?.let { it1 -> InfoLocal(infoId = "0", addressTitle = it, address = it1, payment = " " ) } }
+            address.title?.let { address.address?.let { it1 -> InfoLocal(infoId = 0, addressTitle = it, address = it1, payment = " " ) } }
         if (newInfo != null) {
             infoDao.addAddress(newInfo)
         }
+    }
+
+    fun addAddress(userId: String,addressTittle: String, address: String) {
+
+        val jsonObject = JSONObject()
+        jsonObject.put("user_id", userId)
+        jsonObject.put("title", address)
+        jsonObject.put("address", addressTittle)
+
+        val request = JsonObjectRequest(
+            Request.Method.POST, URL_ADD_ADDRESS, jsonObject,
+            { response ->
+                val addressAddResponse = Gson().fromJson(response.toString(),
+                    AddressResponse::class.java)
+
+                if (addressAddResponse.status == 0) {
+                    Toast.makeText(requireContext(), "Address added!", Toast.LENGTH_SHORT).show()
+                } else {
+                    val message = addressAddResponse.message
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+
+            })
+
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
     }
 
     private fun initDao() {
@@ -128,5 +183,6 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
 
     companion object {
         const val URL_ADDRESS = "http://10.0.2.2/myshop/index.php/User/addresses/"
+        const val URL_ADD_ADDRESS = "http://10.0.2.2/myshop/index.php/User/address"
     }
 }

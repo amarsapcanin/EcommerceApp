@@ -38,7 +38,7 @@ class CartFragment : Fragment() {
         binding.rcProducts.adapter = productLocalAdapter
         binding.rcProducts.layoutManager = layoutManager
 
-        binding.txtTotal.text = "$ ${productDao.calculateTotalPriceInCart().toString()}"
+        binding.txtTotal.text = "$ ${productDao.calculateTotalPriceInCart()}"
 
         binding.btnCheckout.setOnClickListener {
             parentFragmentManager.beginTransaction()

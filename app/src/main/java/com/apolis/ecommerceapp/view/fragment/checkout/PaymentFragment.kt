@@ -10,16 +10,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.FragmentPaymentBinding
+import com.apolis.ecommerceapp.model.local.DbHandler
+import com.apolis.ecommerceapp.model.local.dao.InfoDao
+import com.apolis.ecommerceapp.model.local.entity.InfoLocal
 import com.apolis.ecommerceapp.view.adapter.PaymentAdapter
 
 class PaymentFragment : Fragment(), PaymentAdapter.ItemClickPaymentListener {
 
     private lateinit var binding: FragmentPaymentBinding
+    private lateinit var dbHandler: DbHandler
+    private lateinit var infoDao: InfoDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        initDao()
         binding = FragmentPaymentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,6 +55,11 @@ class PaymentFragment : Fragment(), PaymentAdapter.ItemClickPaymentListener {
     }
 
     override fun onItemClick(payment: String) {
+        infoDao.updatePayment(payment)
+    }
 
+    private fun initDao() {
+        dbHandler = DbHandler(requireContext())
+        infoDao = InfoDao(dbHandler)
     }
 }

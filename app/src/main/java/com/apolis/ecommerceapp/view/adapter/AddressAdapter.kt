@@ -44,7 +44,7 @@ class AddressAdapter(private val addresses: List<Address>,
                     txtTitle.text = address.title
                     txtAddress.text = address.address
 
-                    //selectedAddress.isChecked = adapterPosition == selectedAddressPosition
+                    selectedAddress.isChecked = adapterPosition == selectedAddressPosition
 
                     selectedAddress.setOnClickListener {
                         val position = adapterPosition
@@ -54,11 +54,6 @@ class AddressAdapter(private val addresses: List<Address>,
                             notifyItemChanged(previousSelectedPosition)
                             notifyItemChanged(position)
                             itemClickRadioListener.onItemClick(addresses[position])
-
-                            /*
-                            val selectedAddress = addresses[position]
-                            val info = Info(selectedAddress.address)
-                            infoDao.insert(info) */
                         }
                     }
                 }
