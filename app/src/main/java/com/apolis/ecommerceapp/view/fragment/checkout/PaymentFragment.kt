@@ -24,7 +24,7 @@ class PaymentFragment : Fragment(), PaymentAdapter.ItemClickPaymentListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         initDao()
         binding = FragmentPaymentBinding.inflate(inflater, container, false)
         return binding.root

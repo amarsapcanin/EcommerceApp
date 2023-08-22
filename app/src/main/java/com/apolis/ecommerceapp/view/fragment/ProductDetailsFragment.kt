@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.apolis.ecommerceapp.R
 import com.apolis.ecommerceapp.databinding.FragmentProductDetailsBinding
 import com.apolis.ecommerceapp.model.local.DbHandler
 import com.apolis.ecommerceapp.model.local.dao.ProductDao
@@ -68,7 +69,7 @@ class ProductDetailsFragment : Fragment() {
             txtPriceOfProduct.text = "$ ${product.price}"
 
             Picasso.get()
-                .load(CategoryAdapter.URL_IMAGE + product.product_image_url)
+                .load(R.drawable.iphone_immmm)
                 .into(imgProduct)
 
             binding.apply {

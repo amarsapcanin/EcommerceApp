@@ -9,9 +9,9 @@ import com.apolis.ecommerceapp.model.preferences.SharedPreference
 import com.apolis.ecommerceapp.model.remote.dto.CategoryResponse
 import com.apolis.ecommerceapp.model.remote.dto.LoginResponse
 import com.apolis.ecommerceapp.model.remote.dto.LogoutResponse
+import com.apolis.ecommerceapp.model.remote.dto.OrderResponse
 import com.google.gson.Gson
 import org.json.JSONObject
-import kotlin.math.log
 
 class VolleyHandler(private val context: Context) {
 
@@ -80,21 +80,21 @@ class VolleyHandler(private val context: Context) {
             requestQueue.add(request)
     }
 
-    fun getCategories(responseCategoryCallback: ResponseCategoryCallback){
+    fun getCategories(responseCategoryResponse: ResponseCategoryCallback){
         val request = JsonObjectRequest(
             GET, URL_CATEGORY, null,
             { response ->
-                val categoriesResponse = Gson().fromJson(response.toString(), CategoryResponse::class.java)
+                val categoryResponse = Gson().fromJson(response.toString(), CategoryResponse::class.java)
 
-                if (categoriesResponse.status == 0) {
-                    responseCategoryCallback.successCategory(categoriesResponse)
+                if (categoryResponse.status == 0) {
+                    responseCategoryResponse.successCategory(categoryResponse)
                 } else {
-                    val message = categoriesResponse.message
-                    responseCategoryCallback.failureCategory(message)
+                    val message = categoryResponse.message
+                    responseCategoryResponse.failureCategory(message)
                 }
             },
             { error ->
-                responseCategoryCallback.failureCategory(error.toString())
+                responseCategoryResponse.failureCategory(error.toString())
             })
         val requestQueue = Volley.newRequestQueue(context)
         requestQueue.add(request)
@@ -125,13 +125,36 @@ class VolleyHandler(private val context: Context) {
         requestQueue.add(request)
     }
 
+    fun getOrders(responseOrderCallback: ResponseOrderCallback){
+        sharedPreference = SharedPreference(context)
+        val userId = sharedPreference.getId("userId")
+        val url = URL_ORDERS + userId
+        val request = JsonObjectRequest(
+            GET, url, null,
+            { response ->
+                val ordersResponse = Gson().fromJson(response.toString(), OrderResponse::class.java)
+
+                if (ordersResponse.status == 0) {
+                    responseOrderCallback.successOrder(ordersResponse)
+                } else {
+                    val message = ordersResponse.message
+                    responseOrderCallback.failureOrder(message)
+                }
+            },
+            { error ->
+                responseOrderCallback.failureOrder(error.toString())
+            })
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(request)
+    }
+
 
     companion object {
         const val URL_LOGIN = "http://10.0.2.2/myshop/index.php/User/auth"
         const val URL_REG = "http://10.0.2.2/myshop/index.php/User/register"
         const val URL_CATEGORY = "http://10.0.2.2/myshop/index.php/Category"
         const val URL_LOGOUT = "http://10.0.2.2/myshop/index.php/User/logout"
-        // const val URL_ADDRESS = "http://10.0.2.2/myshop/index.php/User/address"
+        const val URL_ORDERS = "http://10.0.2.2/myshop/index.php/Order/userOrders/"
         const val KEY_EMAIL = "email_id"
         const val KEY_PASSWORD = "password"
         const val KEY_FULLNAME = "full_name"

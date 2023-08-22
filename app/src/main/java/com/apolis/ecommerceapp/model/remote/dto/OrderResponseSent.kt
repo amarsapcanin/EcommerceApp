@@ -1,7 +1,7 @@
 package com.apolis.ecommerceapp.model.remote.dto
 
-data class OrderResponse(
+data class OrderResponseSent(
     val message: String,
-    val orders: List<Order>,
+    val order_id: Int,
     val status: Int
 )
