@@ -40,7 +40,7 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         initDao()
         binding = FragmentDeliveryBinding.inflate(inflater, container, false)
         return binding.root
@@ -127,7 +127,7 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
                 val addressTittle = edAddressTitle.text.toString()
 
                 val userId = sharedPreference.getId("userId").toString()
-                addAddress(userId, addressTittle, address )
+                addAddress(userId, address, addressTittle )
 
                 edAddress.text?.clear()
                 edAddressTitle.text?.clear()
@@ -142,7 +142,7 @@ class DeliveryFragment : Fragment(), AddressAdapter.ItemClickRadioListener {
 
     override fun onItemClick(address: Address) {
         val newInfo =
-            address.title?.let { address.address?.let { it1 -> InfoLocal(infoId = 0, addressTitle = it, address = it1, payment = " " ) } }
+            address.title?.let { address.address?.let { it1 -> InfoLocal(infoId = 0, address = it1, addressTitle = it, payment = " " ) } }
         if (newInfo != null) {
             infoDao.addAddress(newInfo)
         }

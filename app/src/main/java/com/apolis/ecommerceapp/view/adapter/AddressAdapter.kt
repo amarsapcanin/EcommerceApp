@@ -46,16 +46,6 @@ class AddressAdapter(private val addresses: List<Address>,
 
                     selectedAddress.isChecked = adapterPosition == selectedAddressPosition
 
-                    selectedAddress.setOnClickListener {
-                        val position = adapterPosition
-                        if (position != RecyclerView.NO_POSITION && selectedAddressPosition != position) {
-                            val previousSelectedPosition = selectedAddressPosition
-                            selectedAddressPosition = position
-                            notifyItemChanged(previousSelectedPosition)
-                            notifyItemChanged(position)
-                            itemClickRadioListener.onItemClick(addresses[position])
-                        }
-                    }
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.apolis.ecommerceapp.view.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +24,9 @@ import com.apolis.ecommerceapp.presenter.LogoutContract
 import com.apolis.ecommerceapp.presenter.LogoutPresenter
 import com.apolis.ecommerceapp.view.fragment.CartFragment
 import com.apolis.ecommerceapp.view.fragment.HomeFragment
+import com.apolis.ecommerceapp.view.fragment.OrdersFragment
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
 
     private lateinit var binding: ActivityMainBinding
@@ -34,7 +37,6 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
     private lateinit var productDao: ProductDao
     private lateinit var infoDao: InfoDao
     private var isSearchVisible = false
-    private var isDarkTheme = false
 
     fun updateToolbar(title: String) {
         supportActionBar?.apply {
@@ -51,13 +53,15 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
 
     fun originalToolbar(){
         supportActionBar?.apply {
-            binding.txtTitle.text = "Super Cart"
+            val title = "Super Cart"
+            binding.txtTitle.text = title
             binding.imgSearch.visibility = View.VISIBLE
             binding.imgBack.visibility = View.GONE
             setHomeAsUpIndicator(R.drawable.baseline_menu_24)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -132,6 +136,10 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
                     productDao.clearAllProducts()
                     infoDao.clearAllInfo()
                 }
+                R.id.orders -> {
+                    handleMenuEvent(OrdersFragment())
+                    binding.txtTitle.text = "Orders"
+                }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
@@ -147,14 +155,6 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
             }
         }
 
-    }
-
-    private fun toggleTheme() {
-        if (isDarkTheme) {
-            setTheme(R.style.ThemeLight)
-        } else {
-            setTheme(R.style.ThemeDark)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -176,6 +176,7 @@ class MainActivity : AppCompatActivity(), LogoutContract.LogoutView {
             .commit()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount > 0){
             supportFragmentManager.popBackStack()

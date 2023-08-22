@@ -16,8 +16,7 @@ import com.apolis.ecommerceapp.model.local.DbHandler
 import com.apolis.ecommerceapp.model.local.dao.InfoDao
 import com.apolis.ecommerceapp.model.local.dao.ProductDao
 import com.apolis.ecommerceapp.model.preferences.SharedPreference
-import com.apolis.ecommerceapp.model.remote.dto.AddressResponse
-import com.apolis.ecommerceapp.model.remote.dto.OrderResponse
+import com.apolis.ecommerceapp.model.remote.dto.OrderResponseSent
 import com.apolis.ecommerceapp.view.activity.MainActivity
 import com.apolis.ecommerceapp.view.adapter.CheckoutItemAdapter
 import com.google.gson.Gson
@@ -34,7 +33,7 @@ class SummaryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         initDao()
         binding = FragmentSummaryBinding.inflate(inflater, container, false)
         return binding.root
@@ -114,11 +113,11 @@ class SummaryFragment : Fragment() {
         val request = JsonObjectRequest(
             Request.Method.POST, URL_NEW_ORDER, jsonObject,
             { response ->
-                val orderResponse = Gson().fromJson(response.toString(), OrderResponse::class.java)
-                if (orderResponse.status == 0) {
+                val orderResponseSent = Gson().fromJson(response.toString(), OrderResponseSent::class.java)
+                if (orderResponseSent.status == 0) {
                     Toast.makeText(requireContext(), "ORDER PLACED!", Toast.LENGTH_SHORT).show()
                 } else {
-                    val message = orderResponse.message
+                    val message = orderResponseSent.message
                     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
             },
